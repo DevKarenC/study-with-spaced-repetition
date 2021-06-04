@@ -19,9 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api', require('./api'));
 
 // send notFound.html for any requests that don't match one of our routes
-app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, './notFound.html'));
-});
+// app.get('*', function (req, res) {
+//   res.sendFile(path.join(__dirname, './notFound.html'));
+// });
 
 // catch 500 errors
 app.use(function (err, req, res, next) {
