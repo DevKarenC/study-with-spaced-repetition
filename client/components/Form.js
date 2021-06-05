@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import { createEmail } from '../redux/email';
 
-const Form = () => {
+const Form = (props) => {
   const [inputs, setInputs] = useState({});
 
   const handleInputChange = (e) => {
@@ -11,7 +13,8 @@ const Form = () => {
   const handleSubmit = (e) => {
     if (e) {
       e.preventDefault();
-      alert('submitted!');
+      props.addEmail(inputs);
+      setInputs((inputs) => ({ ...inputs, [e.target.name]: '' }));
     }
   };
 
@@ -51,4 +54,16 @@ const Form = () => {
   );
 };
 
-export default Form;
+const mapStateToProps = (state) => {
+  return {
+    emails: state.emails,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addEmail: (newEmail) => dispatch(createEmail(newEmail)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
