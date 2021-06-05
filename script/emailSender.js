@@ -1,10 +1,10 @@
 require('dotenv').config();
+const { Email } = require('../server/db');
 const nodemailer = require('nodemailer');
-const emailList = 'hekir48023@vvaa1.com';
 const senderEmail = process.env.SENDER_EMAIL;
 const senderPassword = process.env.SENDER_PASSWORD;
 
-const sendMail = async (subject, text, to = emailList) => {
+const sendMail = async () => {
   try {
     const transporter = nodemailer.createTransport({
       service: 'Gmail',
@@ -14,15 +14,17 @@ const sendMail = async (subject, text, to = emailList) => {
       },
     });
 
-    const message = {
-      from: `Spaced Repetition from ${senderEmail}!`,
-      to,
-      subject,
-      text: subject,
-      html: text,
-    };
+    const emailList = await Email.getAllEmails();
+    const emails = emailList.map((email) => {
+      return {
+        from: `Spaced Repetition <${senderEmail}>`,
+        to: email.email,
+        subject: email.item,
+        text: email.message,
+      };
+    });
 
-    transporter.sendMail(message);
+    emails.forEach((email) => transporter.sendMail(email));
   } catch (error) {
     console.error('Oh no, error while trying to study vigorously!');
   }

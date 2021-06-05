@@ -16,10 +16,12 @@ const init = async () => {
     app.listen(PORT, () =>
       console.log(`Retaining knowledge on port ${PORT}...`)
     );
+
+    // send reminder emails
     cron.schedule(
       '*/1 * * * *',
       () => {
-        sendMail(`hello world!`, `this is a test email body`);
+        sendMail();
         console.log('sending email every 1 minute');
       },
       {

@@ -2,11 +2,9 @@
 const db = require('./db');
 const Email = require('./models/Email');
 
-// define associations
-
-// Email methods
+// Email Class Methods
 Email.getAllEmails = async () => {
-  const emails = await Email.findAll();
+  const emails = await Email.findAll({});
   return emails;
 };
 
