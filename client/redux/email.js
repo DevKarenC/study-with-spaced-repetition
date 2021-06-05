@@ -1,4 +1,5 @@
 import axios from 'axios';
+import regeneratorRuntime from 'regenerator-runtime';
 
 // ACTION TYPE
 const ADD_EMAIL = 'ADD_EMAIL';

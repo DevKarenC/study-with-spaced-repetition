@@ -14,7 +14,9 @@ const Form = (props) => {
     if (e) {
       e.preventDefault();
       props.addEmail(inputs);
-      setInputs((inputs) => ({ ...inputs, [e.target.name]: '' }));
+      setInputs(() => ({
+        [e.target.name]: '',
+      }));
     }
   };
 
@@ -47,7 +49,7 @@ const Form = (props) => {
         name="message"
         value={inputs.message || ''}
         onChange={handleInputChange}
-        placeholder="If you would like to see your notes in the email, feel free to include them here."
+        placeholder="If you would like to see your notes in the email, include them here!"
       />
       <button type="submit">Submit</button>
     </form>
