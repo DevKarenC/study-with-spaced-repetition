@@ -19,7 +19,7 @@ const sendMail = async () => {
       return {
         from: `Spaced Repetition <${senderEmail}>`,
         to: email.email,
-        subject: email.item,
+        subject: `From Spaced Repetition - ${email.item}!`,
         text: email.message,
       };
     });

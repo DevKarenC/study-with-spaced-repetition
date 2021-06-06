@@ -29,7 +29,6 @@ const Form = (props) => {
         name="email"
         value={inputs.email || ''}
         onChange={handleInputChange}
-        placeholder="Your Email"
         required
       />
       <label htmlFor="item">Reminder Item</label>
@@ -39,7 +38,7 @@ const Form = (props) => {
         name="item"
         value={inputs.item || ''}
         onChange={handleInputChange}
-        placeholder="This will be used as a subject line for your reminder email!"
+        placeholder="Subject line for your email"
         required
       />
       <label htmlFor="message">Message</label>
@@ -49,7 +48,8 @@ const Form = (props) => {
         name="message"
         value={inputs.message || ''}
         onChange={handleInputChange}
-        placeholder="If you would like to see your notes in the email, include them here!"
+        placeholder="Study Materials"
+        rows="10"
       />
       <button type="submit">Submit</button>
     </form>

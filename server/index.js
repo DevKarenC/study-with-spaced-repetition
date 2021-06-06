@@ -21,7 +21,7 @@ const init = async () => {
     cron.schedule(
       '*/1 * * * *',
       () => {
-        sendMail();
+        // sendMail();
         console.log('sending email every 1 minute');
       },
       {
