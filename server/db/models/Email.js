@@ -19,10 +19,11 @@ const Email = db.define('email', {
   message: {
     type: Sequelize.TEXT,
   },
-  reminderDateTime: {
-    type: Sequelize.DATE,
+  count: {
+    type: Sequelize.INTEGER,
     allowNull: false,
-    defaultValue: Sequelize.NOW,
+    defaultValue: 0,
+    validate: { max: 4, min: 0 },
   },
 });
 

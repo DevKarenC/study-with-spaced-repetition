@@ -13,6 +13,16 @@ Email.addNewEmail = async (data) => {
   return email;
 };
 
+Email.incrementCount = async () => {
+  const emails = await Email.getAllEmails();
+  await Promise.all(
+    emails.map(async (email) => {
+      email.count += 1;
+      await email.save();
+    })
+  );
+};
+
 module.exports = {
   db,
   Email,

@@ -16,15 +16,25 @@ const sendMail = async () => {
 
     const emailList = await Email.getAllEmails();
     const emails = emailList.map((email) => {
-      return {
-        from: `Spaced Repetition <${senderEmail}>`,
-        to: email.email,
-        subject: `From Spaced Repetition - ${email.item}!`,
-        text: email.message,
-      };
+      return [
+        {
+          from: `Spaced Repetition <${senderEmail}>`,
+          to: email.email,
+          subject: `From Spaced Repetition - ${email.item}!`,
+          text: email.message,
+        },
+        email.count,
+      ];
     });
 
-    emails.forEach((email) => transporter.sendMail(email));
+    emails.forEach((email) => {
+      const [message, count] = email;
+      // stop sending emails after 4 emails go out to the user
+      if (count < 4) {
+        transporter.sendMail(message);
+        Email.incrementCount();
+      }
+    });
   } catch (error) {
     console.error('Oh no, error while trying to study vigorously!');
   }

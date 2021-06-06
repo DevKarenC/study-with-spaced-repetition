@@ -19,11 +19,17 @@ const init = async () => {
 
     // send reminder emails
     cron.schedule(
+      // demo purposes
       '*/1 * * * *',
       () => {
-        // sendMail();
-        console.log('sending email every 1 minute');
+        sendMail();
+        console.log('Sending email every minute for demo purposes');
       },
+      // '00 13 * * Saturday',
+      // () => {
+      //   sendMail();
+      //   console.log('Sending email every Saturday 1PM UTC');
+      // },
       {
         timezone: 'Etc/UTC',
       }
