@@ -1,19 +1,51 @@
 require('dotenv').config();
 const { Email } = require('../server/db');
 const nodemailer = require('nodemailer');
+const { google } = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
 const senderEmail = process.env.SENDER_EMAIL;
-const senderPassword = process.env.SENDER_PASSWORD;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
+const refreshToken = process.env.REFRESH_TOKEN;
+
+const createTransporter = async () => {
+  const oauth2Client = new OAuth2(
+    clientId,
+    clientSecret,
+    'https://developers.google.com/oauthplayground'
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: refreshToken,
+  });
+
+  const accessToken = await new Promise((resolve, reject) => {
+    oauth2Client.getAccessToken((err, token) => {
+      if (err) {
+        reject('Failed to create access token :(');
+      }
+      resolve(token);
+    });
+  });
+
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      type: 'OAuth2',
+      user: senderEmail,
+      accessToken,
+      clientId: clientId,
+      clientSecret: clientSecret,
+      refreshToken: refreshToken,
+    },
+  });
+
+  return transporter;
+};
 
 const sendMail = async () => {
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: senderEmail,
-        pass: senderPassword,
-      },
-    });
-
+    let emailTransporter = await createTransporter();
     const emailList = await Email.getAllEmails();
     const emails = emailList.map((email) => {
       return [
@@ -31,7 +63,7 @@ const sendMail = async () => {
       const [message, count] = email;
       // stop sending emails after 4 emails go out to the user
       if (count < 4) {
-        transporter.sendMail(message);
+        emailTransporter.sendMail(message);
         Email.incrementCount();
       }
     });
