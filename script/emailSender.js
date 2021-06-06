@@ -68,7 +68,7 @@ const sendMail = async () => {
       }
     });
   } catch (error) {
-    console.error('Oh no, error while trying to study vigorously!');
+    console.log('Oh no, error while trying to study vigorously!', error);
   }
 };
 
