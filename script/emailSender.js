@@ -17,6 +17,7 @@ const createTransporter = async () => {
 
   oauth2Client.setCredentials({
     refresh_token: refreshToken,
+    forceRefreshOnFailure: true,
   });
 
   const accessToken = await new Promise((resolve, reject) => {
