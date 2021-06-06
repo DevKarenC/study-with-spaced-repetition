@@ -9,18 +9,18 @@ const seed = async () => {
   // Create emails
   const emails = await Promise.all([
     Email.create({
-      email: 'test1@email.com',
+      email: 'hekir48023@vvaa1.com',
       item: 'Review Sequelize',
       message:
         'https://sequelize.org/master/manual/validations-and-constraints.html',
     }),
     Email.create({
-      email: 'test2@email.com',
+      email: 'b8gcnb5987@mac-24.com',
       item: 'Review Express',
       message: 'https://expressjs.com/',
     }),
     Email.create({
-      email: 'test3@email.com',
+      email: 'study.with.spaced.repetition@gmail.com',
       item: 'Review Node',
       message: '',
     }),
