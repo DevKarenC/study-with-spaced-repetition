@@ -23,7 +23,6 @@ const Email = db.define('email', {
     type: Sequelize.INTEGER,
     allowNull: false,
     defaultValue: 0,
-    validate: { max: 4, min: 0 },
   },
 });
 
